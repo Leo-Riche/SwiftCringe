@@ -8,15 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		4F34E5E22EBB4E4200D3080B /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 4F34E5E12EBB4E4200D3080B /* DesignSystem */; };
+		4F34E5F32EBB670C00D3080B /* DesignSystem in Frameworks */ = {isa = PBXBuildFile; productRef = 4F34E5F22EBB670C00D3080B /* DesignSystem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4F362EE02EBA57DD00213415 /* SwiftCringe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCringe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4F34E5F52EBB671200D3080B /* Exceptions for "SwiftCringe" folder in "SwiftCringe" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Packages/Users/lr221686/Desktop/SwiftCringe/SwiftCringe/Packages/DesignSystem,
+			);
+			target = 4F362EDF2EBA57DD00213415 /* SwiftCringe */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4F362EE22EBA57DD00213415 /* SwiftCringe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4F34E5F52EBB671200D3080B /* Exceptions for "SwiftCringe" folder in "SwiftCringe" target */,
+			);
 			path = SwiftCringe;
 			sourceTree = "<group>";
 		};
@@ -28,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F34E5E22EBB4E4200D3080B /* DesignSystem in Frameworks */,
+				4F34E5F32EBB670C00D3080B /* DesignSystem in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +94,7 @@
 			name = SwiftCringe;
 			packageProductDependencies = (
 				4F34E5E12EBB4E4200D3080B /* DesignSystem */,
+				4F34E5F22EBB670C00D3080B /* DesignSystem */,
 			);
 			productName = SwiftCringe;
 			productReference = 4F362EE02EBA57DD00213415 /* SwiftCringe.app */;
@@ -108,6 +124,9 @@
 			);
 			mainGroup = 4F362ED72EBA57DD00213415;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4F34E5F12EBB670C00D3080B /* XCLocalSwiftPackageReference "../DesignSystem" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4F362EE12EBA57DD00213415 /* Products */;
 			projectDirPath = "";
@@ -350,8 +369,19 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		4F34E5F12EBB670C00D3080B /* XCLocalSwiftPackageReference "../DesignSystem" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../DesignSystem;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		4F34E5E12EBB4E4200D3080B /* DesignSystem */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignSystem;
+		};
+		4F34E5F22EBB670C00D3080B /* DesignSystem */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DesignSystem;
 		};
