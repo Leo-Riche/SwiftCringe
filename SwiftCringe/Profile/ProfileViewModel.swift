@@ -43,7 +43,9 @@ final class ProfileViewModel: ObservableObject {
             age: Int(age) ?? current.age,
             password: password,
             photo: photoURL.isEmpty ? nil : photoURL,
-            description: description.isEmpty ? nil : description
+            description: description.isEmpty ? nil :
+            description,
+            listLikes: current.listLikes
         )
         
         session.currentUser = updatedUser

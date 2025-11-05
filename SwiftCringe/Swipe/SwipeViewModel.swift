@@ -11,9 +11,18 @@ class SwipeViewModel: ObservableObject {
     @Published var password: String
     @Published var photoURL: String
     @Published var showSaveConfirmation = false
+    
 
     private var session: SessionManager
 
+    var likedNames: [String] {
+            guard let currentUser = session.currentUser else { return [] }
+            return currentUser.listLikes.compactMap { id in
+                MockData.users.first(where: { $0.id == id })?.name
+            }
+        }
+    
+    
     enum SwipeDirection {
         case left, right, none
     }
@@ -50,14 +59,32 @@ class SwipeViewModel: ObservableObject {
 
         // Suppression du profil après l'animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            withAnimation {
-                if !self.profiles.isEmpty {
-                    let profile = self.profiles.last!
-                    print(direction == .right ? "👍 OUI pour \(profile.name)" : "👎 NON pour \(profile.name)")
-                    self.profiles.removeLast()
-                    self.topCardOffset = .zero
+                withAnimation {
+                    if !self.profiles.isEmpty {
+                        let profile = self.profiles.last!
+
+                        // ✅ Ajout du like si swipe à droite
+                        if direction == .right {
+                            self.addLike(profileId: profile.id)
+                            print("❤️ Ajouté à la liste des likes : \(profile.name)")
+                        } else {
+                            print("👎 NON pour \(profile.name)")
+                        }
+
+                        self.profiles.removeLast()
+                        self.topCardOffset = .zero
+                    }
                 }
             }
+    }
+    
+    // Nouvelle fonction pour ajouter à listLikes
+    private func addLike(profileId: Int) {
+        guard var currentUser = session.currentUser else { return }
+        if !currentUser.listLikes.contains(profileId) {
+            currentUser.listLikes.append(profileId)
+            session.currentUser = currentUser // on met à jour le user dans la session
         }
     }
+    
 }
