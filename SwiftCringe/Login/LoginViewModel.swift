@@ -12,8 +12,12 @@ final class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var loginError: LoginValidationError?
-    @Published var isLoggedIn: Bool = false
-    @Published var currentUser: User?
+    
+    private let session: SessionManager
+
+    init(session: SessionManager) {
+        self.session = session
+    }
 
     func login() {
         guard !email.isEmpty else {
@@ -36,9 +40,7 @@ final class LoginViewModel: ObservableObject {
             return
         }
 
-        currentUser = user
-        isLoggedIn = true
+        session.login(user: user)
         loginError = nil
     }
 }
-
