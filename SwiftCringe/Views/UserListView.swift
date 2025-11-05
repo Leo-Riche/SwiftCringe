@@ -6,26 +6,34 @@
 //
 
 import SwiftUI
+import DesignSystem // ton package contenant UserCard
 
 struct UserListView: View {
     let users = MockData.users
 
+    let columns = [
+        GridItem(.adaptive(minimum: 250), spacing: 16)
+    ]
+
     var body: some View {
-        NavigationView {
-            List(users) { user in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(user.name)
-                        .font(.headline)
-                    Text(user.email)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text("Âge : \(user.age)")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+        ScrollView {
+            LazyVGrid(columns: columns, spacing: 16) {
+                ForEach(users) { user in
+                    UserCard(user: UserCard.MockUser(
+                        id: user.id,
+                        name: user.name,
+                        age: user.age,
+                        photo: user.photo,
+                        description: user.description
+                    ))
                 }
-                .padding(.vertical, 4)
             }
-            .navigationTitle("Utilisateurs")
+            .padding()
         }
+        .navigationTitle("Utilisateurs")
     }
+}
+
+#Preview {
+    UserListView()
 }
