@@ -15,9 +15,22 @@
 		4F362EE02EBA57DD00213415 /* SwiftCringe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCringe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4F34E5F92EBB682500D3080B /* Exceptions for "SwiftCringe" folder in "SwiftCringe" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Packages/Users/lr221686/Desktop/SwiftCringe/SwiftCringe/Packages/DesignSystem,
+			);
+			target = 4F362EDF2EBA57DD00213415 /* SwiftCringe */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4F362EE22EBA57DD00213415 /* SwiftCringe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4F34E5F92EBB682500D3080B /* Exceptions for "SwiftCringe" folder in "SwiftCringe" target */,
+			);
 			path = SwiftCringe;
 			sourceTree = "<group>";
 		};
