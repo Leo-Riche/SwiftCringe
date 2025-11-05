@@ -40,9 +40,9 @@ struct LoginView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(.top, 8)
-
-                    if !viewModel.loginError.isEmpty {
-                        Text(viewModel.loginError)
+                    
+                    if let error = viewModel.loginError {
+                        Text(error.localizedDescription)
                             .foregroundColor(.red)
                             .font(.caption)
                     }
