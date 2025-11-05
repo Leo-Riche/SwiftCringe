@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct LoginView: View {
     @State private var email = ""
@@ -20,14 +21,21 @@ struct LoginView: View {
                 Text("Connexion")
                     .font(.largeTitle)
                     .bold()
-                
-                TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
+                CustomTextField(
+                    placeholder: "Email",
+                    text: $email,
+                    highlightColor: .blue,
+                    width: 300, isFocused: false
+                )
+                .autocapitalization(.none)
+                .keyboardType(.emailAddress)
 
-                SecureField("Mot de passe", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                CustomSecureField(
+                    placeholder: "Mot de passe",
+                    text: $password,
+                    highlightColor: .blue,
+                    width: 300
+                )
 
                 Button("Se connecter") {
                     login()
