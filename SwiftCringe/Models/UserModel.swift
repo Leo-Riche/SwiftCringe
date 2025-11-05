@@ -5,3 +5,12 @@
 //  Created by RICHÉ Léo on 05/11/2025.
 //
 
+import SwiftUI
+
+struct User: Identifiable, Codable {
+    let id: Int
+    let name: String
+    let email: String
+    let age: Int
+    let password: String
+}
