@@ -41,7 +41,7 @@ struct LoginView: View {
                         .font(.caption)
                 }
 
-                NavigationLink(destination: UserListView(), isActive: $isLoggedIn) {
+                NavigationLink(destination: SwipeView(), isActive: $isLoggedIn) {
                     EmptyView()
                 }
 
@@ -61,4 +61,8 @@ struct LoginView: View {
             loginError = "Email ou mot de passe incorrect."
         }
     }
+}
+
+#Preview {
+    LoginView()
 }

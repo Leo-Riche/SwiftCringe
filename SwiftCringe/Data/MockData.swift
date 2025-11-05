@@ -46,7 +46,7 @@ struct MockData {
         User(id: 37, name: "Katia Vallet", email: "katia.vallet@example.com", age: 32, password: "katia123"),
         User(id: 38, name: "Loïc Marin", email: "loic.marin@example.com", age: 34, password: "loic456"),
         User(id: 39, name: "Mélanie Payet", email: "melanie.payet@example.com", age: 29, password: "melanie789"),
-        User(id: 40, name: "Nathalie Hubert", email: "nathalie.hubert@example.com", age: 41, password: "nathalie000")
+        User(id: 40, name: "Nathalie Hubert", email: "nathalie.hubert@example.com", age: 41, password: "nathalie000"),
         User(id: 40, name: "Test Test", email: "test@example.com", age: 19, password: "test")
     ]
 }
