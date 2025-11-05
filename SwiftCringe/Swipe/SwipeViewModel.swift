@@ -1,38 +1,62 @@
-//
-//  SwipeViewModel.swift
-//  SwiftCringe
-//
-//  Created by RICHÉ Léo on 05/11/2025.
-//
-
 import SwiftUI
+import DesignSystem
 
-final class SwipeViewModel: ObservableObject {
+class SwipeViewModel: ObservableObject {
     @Published var profiles: [User] = MockData.users
     @Published var topCardOffset: CGSize = .zero
+    
+    @Published var name: String
+    @Published var age: String
+    @Published var description: String
+    @Published var password: String
+    @Published var photoURL: String
+    @Published var showSaveConfirmation = false
 
-    private let session: SessionManager
+    private var session: SessionManager
 
+    enum SwipeDirection {
+        case left, right, none
+    }
+    
     init(session: SessionManager) {
         self.session = session
+        if let user = session.currentUser {
+            self.name = user.name
+            self.age = "\(user.age)"
+            self.description = user.description ?? ""
+            self.password = user.password
+            self.photoURL = user.photo ?? ""
+        } else {
+            self.name = ""
+            self.age = ""
+            self.description = ""
+            self.password = ""
+            self.photoURL = ""
+        }
     }
-
-    func handleSwipe(direction: ProfileCardView.SwipeDirection) {
-        guard let lastProfile = profiles.last else { return }
-
-        switch direction {
-        case .right:
-            print("👍 OUI pour \(lastProfile.name)")
-        case .left:
-            print("👎 NON pour \(lastProfile.name)")
-        case .none:
-            break
+    
+    // Fonction de gestion du swipe
+    func swipe(_ direction: SwipeDirection) {
+        withAnimation(.easeOut(duration: 0.3)) {
+            switch direction {
+            case .right:
+                topCardOffset = CGSize(width: 500, height: 0)
+            case .left:
+                topCardOffset = CGSize(width: -500, height: 0)
+            case .none:
+                topCardOffset = .zero
+            }
         }
 
-        withAnimation {
-            if !profiles.isEmpty {
-                profiles.removeLast()
-                topCardOffset = .zero
+        // Suppression du profil après l'animation
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            withAnimation {
+                if !self.profiles.isEmpty {
+                    let profile = self.profiles.last!
+                    print(direction == .right ? "👍 OUI pour \(profile.name)" : "👎 NON pour \(profile.name)")
+                    self.profiles.removeLast()
+                    self.topCardOffset = .zero
+                }
             }
         }
     }

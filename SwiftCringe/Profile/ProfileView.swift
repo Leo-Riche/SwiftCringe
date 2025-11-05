@@ -1,10 +1,3 @@
-//
-//  ProfileView.swift
-//  SwiftCringe
-//
-//  Created by RICHÉ Léo on 05/11/2025.
-//
-
 import SwiftUI
 
 struct ProfileView: View {
