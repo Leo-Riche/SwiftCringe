@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DesignSystem // ton package contenant UserCard
+import DesignSystem
 
 struct UserListView: View {
     let users = MockData.users

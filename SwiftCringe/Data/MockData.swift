@@ -1,5 +1,6 @@
 struct MockData {
     static let users: [User] = [
+<<<<<<< HEAD
         User(id: 1, name: "Alice Dupont", email: "alice.dupont@example.com", age: 25, password: "alice123",
              photo: "https://randomuser.me/api/portraits/women/1.jpg",
              description: "Passionnée de design et de voyages, Alice adore découvrir de nouvelles cultures."),
