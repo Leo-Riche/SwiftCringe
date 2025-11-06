@@ -9,13 +9,13 @@ import SwiftUI
 import DesignSystem
 
 struct LoginView: View {
-    @StateObject private var session = SessionManager()
-    @StateObject private var viewModel: LoginViewModel
+    @State private var session = SessionManager()
+    @State private var viewModel: LoginViewModel
 
     init() {
         let session = SessionManager()
-        _session = StateObject(wrappedValue: session)
-        _viewModel = StateObject(wrappedValue: LoginViewModel(session: session))
+        _session = State(wrappedValue: session)
+        _viewModel = State(wrappedValue: LoginViewModel(session: session))
     }
 
     var body: some View {

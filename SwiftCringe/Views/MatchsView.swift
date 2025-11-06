@@ -8,7 +8,7 @@ import SwiftUI
 import DesignSystem
 
 struct MatchsView: View {
-    @ObservedObject var session: SessionManager
+    var session: SessionManager
     
     private var likedUsers: [User] {
         guard let currentUser = session.currentUser else { return [] }

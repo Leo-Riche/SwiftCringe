@@ -1,12 +1,13 @@
 import SwiftUI
 
+
 struct ProfileView: View {
-    @ObservedObject var session: SessionManager
-    @StateObject private var viewModel: ProfileViewModel
+    var session: SessionManager
+    @State private var viewModel: ProfileViewModel
 
     init(session: SessionManager) {
         self.session = session
-        _viewModel = StateObject(wrappedValue: ProfileViewModel(session: session))
+        _viewModel = State(wrappedValue: ProfileViewModel(session: session))
     }
 
     var body: some View {

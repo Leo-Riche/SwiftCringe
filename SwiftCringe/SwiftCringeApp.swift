@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct YourAppNameApp: App {
-    @StateObject private var session = SessionManager()
+    @State private var session = SessionManager()
 
     var body: some Scene {
         WindowGroup {

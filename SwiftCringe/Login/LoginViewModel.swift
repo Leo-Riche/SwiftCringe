@@ -8,10 +8,11 @@
 import SwiftUI
 import Foundation
 
-final class LoginViewModel: ObservableObject {
-    @Published var email: String = ""
-    @Published var password: String = ""
-    @Published var loginError: LoginValidationError?
+@Observable
+final class LoginViewModel {
+    var email: String = ""
+    var password: String = ""
+    var loginError: LoginValidationError?
     
     private let session: SessionManager
 
