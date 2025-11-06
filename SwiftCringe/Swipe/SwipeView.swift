@@ -12,21 +12,6 @@ struct SwipeView: View {
    
     var body: some View {
         VStack {
-            // Affichage des personnes likées
-            if !viewModel.likedNames.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(viewModel.likedNames, id: \.self) { name in
-                            Text(name)
-                                .padding(8)
-                                .background(Color.green.opacity(0.2))
-                                .cornerRadius(8)
-                        }
-                    }
-                    .padding()
-                }
-            }
-
             ZStack {
                 if viewModel.profiles.isEmpty {
                     Text("Plus rien à voir ici 👀")

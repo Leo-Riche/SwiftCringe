@@ -25,7 +25,7 @@ struct MainView: View {
                 case .swipe:
                     SwipeView(session: session)
                 case .match:
-                    SwipeView(session: session)
+                    MatchsView(session: session)
                 case .profile:
                     ProfileView(session: session)
                 }
