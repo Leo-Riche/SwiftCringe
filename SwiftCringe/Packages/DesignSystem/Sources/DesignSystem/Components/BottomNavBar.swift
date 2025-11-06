@@ -23,16 +23,18 @@ public struct BottomNavBar<TabType: Hashable, Content: View>: View {
     }
 
     public var body: some View {
-        TabView(selection: $selectedTab) {
-            ForEach(tabs) { item in
-                content(item.type)
-                    .tabItem {
-                        Label(item.label, systemImage: item.icon)
-                    }
-                    .tag(item.type)
+        ZStack(alignment: .bottom) {
+            TabView(selection: $selectedTab) {
+                ForEach(tabs) { item in
+                    content(item.type)
+                        .tabItem {
+                            Label(item.label, systemImage: item.icon)
+                        }
+                        .tag(item.type)
+                }
             }
+            .tint(Color("main", bundle: .main))
         }
-        .tint(.blue)
     }
 }
 
@@ -52,3 +54,4 @@ public struct TabItem<TabType: Hashable>: Identifiable, Equatable {
         lhs.id == rhs.id
     }
 }
+

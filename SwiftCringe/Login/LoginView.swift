@@ -28,7 +28,7 @@ struct LoginView: View {
                 CustomTextField(
                     placeholder: "Email",
                     text: $viewModel.email,
-                    highlightColor: .blue,
+                    highlightColor: .second,
                     width: 300,
                     isFocused: false
                 )
@@ -38,14 +38,16 @@ struct LoginView: View {
                 CustomSecureField(
                     placeholder: "Mot de passe",
                     text: $viewModel.password,
-                    highlightColor: .blue,
+                    highlightColor: .second,
                     width: 300
                 )
 
-                Button("Se connecter") {
+                AnimatedButton(
+                    title: "Se connecter",
+                    color: .second
+                ) {
                     viewModel.login()
                 }
-                .buttonStyle(.borderedProminent)
                 .padding(.top, 8)
 
                 if let error = viewModel.loginError {

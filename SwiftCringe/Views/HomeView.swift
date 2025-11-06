@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DesignSystem
 
 struct HomeView: View {
     var session: SessionManager
@@ -39,41 +40,35 @@ struct HomeView: View {
                     .font(.title)
                     .bold()
             }
-
-            Button {
+            
+            AnimatedLabelButton(
+                title: "Voir mon profil",
+                systemImage: "person.crop.circle",
+                color: .second
+            ) {
                 selectedTab = .profile
-            } label: {
-                Label("Voir mon profil", systemImage: "person.crop.circle")
-                    .font(.headline)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
             }
-            .buttonStyle(.borderedProminent)
 
-            Button {
+            AnimatedLabelButton(
+                title: "Swiper !",
+                systemImage: "heart.fill",
+                color: .second
+            ) {
                 selectedTab = .swipe
-            } label: {
-                Label("Swiper !", systemImage: "heart.fill")
-                    .font(.headline)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
             }
-            .buttonStyle(.borderedProminent)
-
-            Button {
+            
+            AnimatedLabelButton(
+                title: "Se déconnecter",
+                systemImage: "arrow.right.square",
+                color: .second
+            ) {
                 session.logout()
-            } label: {
-                Label("Se déconnecter", systemImage: "arrow.right.square")
-                    .font(.headline)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
             }
-            .buttonStyle(.bordered)
 
             Spacer()
         }
         .padding()
-        .navigationTitle("Accueil")
+        .navigationTitle("Accueil")        
     }    
 }
 
