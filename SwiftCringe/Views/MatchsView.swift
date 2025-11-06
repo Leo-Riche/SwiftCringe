@@ -10,14 +10,15 @@ import DesignSystem
 struct MatchsView: View {
     var session: SessionManager
     
-    private var likedUsers: [User] {
-        guard let currentUser = session.currentUser else { return [] }
-        return MockData.users.filter { currentUser.listLikes.contains($0.id) }
-    }
+    @State private var likedUsers: [User] = []
     
     let columns = [
         GridItem(.adaptive(minimum: 160), spacing: 16)
     ]
+    public init(session: SessionManager, likedUsers: [User]) {
+        self.session = session
+        self.likedUsers = likedUsers
+    }
     
     var body: some View {
         NavigationView {
@@ -43,8 +44,10 @@ struct MatchsView: View {
                                     model: .init(
                                         id: user.id,
                                         name: user.name,
+                                        age: user.age,
                                         photo: user.photo,
-                                        description: user.description
+                                        description: user.description,
+                                        interests: user.interests
                                     )
                                 )
                             }
@@ -55,10 +58,13 @@ struct MatchsView: View {
             }
             .navigationTitle("Mes matchs ❤️")
         }
-
+        .onAppear  {
+                guard let currentUser = session.currentUser else { return  }
+                self.likedUsers = MockData.users.filter { currentUser.listLikes.contains($0.id) }
+        }
     }
 }
 
 #Preview {
-    MatchsView(session: .init())
+    MatchsView(session: .init(), likedUsers: [])
 }

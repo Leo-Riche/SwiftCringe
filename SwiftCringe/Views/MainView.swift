@@ -34,7 +34,7 @@ struct MainView: View {
                 SwipeView(session: session)
                     .background(Color(.systemBackground))
             case .match:
-                MatchsView(session: session)
+                MatchsView(session: session, likedUsers: [])
                     .background(Color(.systemBackground))
             case .profile:
                 ProfileView(session: session)
@@ -45,4 +45,6 @@ struct MainView: View {
     }
 }
 
-
+#Preview {
+    MainView(session: .init())
+}

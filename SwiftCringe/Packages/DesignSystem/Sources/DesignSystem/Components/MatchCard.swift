@@ -11,14 +11,18 @@ public struct MatchCard: View {
     public struct Model: Identifiable, Equatable {
         public let id: Int
         public let name: String
+        public let age: Int
         public let photo: String?
         public let description: String?
-        
-        public init(id: Int, name: String, photo: String? = nil, description: String? = nil) {
+        public var interests: [String]
+
+        public init(id: Int, name: String, age: Int, photo: String? = nil, description: String? = nil, interests: [String] = []) {
             self.id = id
             self.name = name
+            self.age = age
             self.photo = photo
             self.description = description
+            self.interests = interests
         }
     }
     
@@ -30,12 +34,12 @@ public struct MatchCard: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            // --- Photo du profil ---
             AsyncImage(url: URL(string: model.photo ?? "")) { image in
                 image
                     .resizable()
                     .scaledToFill()
             } placeholder: {
+               
                 ZStack {
                     Color.gray.opacity(0.2)
                     Image(systemName: "person.fill")
@@ -54,7 +58,6 @@ public struct MatchCard: View {
             )
             .cornerRadius(12, corners: [.topLeft, .topRight])
             
-            // --- Texte en dessous ---
             VStack(alignment: .leading, spacing: 4) {
                 Text(model.name)
                     .font(.headline)
@@ -77,7 +80,6 @@ public struct MatchCard: View {
     }
 }
 
-// --- Petite extension utilitaire ---
 fileprivate extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
