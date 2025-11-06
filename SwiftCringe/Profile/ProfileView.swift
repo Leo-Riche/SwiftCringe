@@ -1,9 +1,10 @@
 import SwiftUI
-
+import DesignSystem
 
 struct ProfileView: View {
     var session: SessionManager
     @State private var viewModel: ProfileViewModel
+    @FocusState private var focusedField: String?
 
     init(session: SessionManager) {
         self.session = session
@@ -11,64 +12,135 @@ struct ProfileView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Mon profil")
-                .font(.largeTitle)
-                .bold()
+        ScrollView {
+            VStack(spacing: 32) {
+                VStack(spacing: 16) {
+                    if let imageURL = URL(string: viewModel.photoURL), !viewModel.photoURL.isEmpty {
+                        AsyncImage(url: imageURL) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 130, height: 130)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color.blue.opacity(0.4), lineWidth: 4))
+                                .shadow(radius: 8)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                    } else {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 130, height: 130)
+                            .foregroundColor(.gray.opacity(0.6))
+                            .shadow(radius: 8)
+                    }
 
-            if let imageURL = URL(string: viewModel.photoURL), !viewModel.photoURL.isEmpty {
-                AsyncImage(url: imageURL) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 120, height: 120)
-                        .clipShape(Circle())
-                } placeholder: {
-                    ProgressView()
+                    Text(viewModel.name.isEmpty ? "Utilisateur" : viewModel.name)
+                        .font(.title2.bold())
+                        .foregroundColor(.primary)
+
+                    Text(session.currentUser?.email ?? "")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
                 }
-            } else {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .foregroundColor(.gray)
-                    .frame(width: 120, height: 120)
-            }
+                .padding(.top, 20)
 
-            VStack(alignment: .leading, spacing: 12) {
-                TextField("Nom", text: $viewModel.name)
-                    .textFieldStyle(.roundedBorder)
+                VStack(alignment: .leading, spacing: 20) {
+                    Text("Informations personnelles")
+                        .font(.headline)
+                        .padding(.bottom, 5)
 
-                TextField("Âge", text: $viewModel.age)
-                    .keyboardType(.numberPad)
-                    .textFieldStyle(.roundedBorder)
-
-                TextField("Lien photo", text: $viewModel.photoURL)
-                    .textFieldStyle(.roundedBorder)
-
-                SecureField("Mot de passe", text: $viewModel.password)
-                    .textFieldStyle(.roundedBorder)
-
-                TextEditor(text: $viewModel.description)
-                    .frame(height: 100)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.3))
+                    CustomTextField(
+                        placeholder: "Nom",
+                        text: $viewModel.name,
+                        highlightColor: .blue,
+                        width: 320,
+                        isFocused: focusedField == "name"
                     )
-            }
-            .padding()
+                    .focused($focusedField, equals: "name")
 
-            Button("Enregistrer les modifications") {
-                viewModel.saveChanges()
-            }
-            .buttonStyle(.borderedProminent)
-            .padding(.top)
+                    CustomTextField(
+                        placeholder: "Âge",
+                        text: $viewModel.age,
+                        highlightColor: .blue,
+                        width: 320,
+                        isFocused: focusedField == "age"
+                    )
+                    .focused($focusedField, equals: "age")
 
-            if viewModel.showSaveConfirmation {
-                Text("✅ Modifications enregistrées !")
+                    CustomTextField(
+                        placeholder: "Lien photo",
+                        text: $viewModel.photoURL,
+                        highlightColor: .blue,
+                        width: 320,
+                        isFocused: focusedField == "photo"
+                    )
+                    .focused($focusedField, equals: "photo")
+
+                    CustomSecureField(
+                        placeholder: "Mot de passe",
+                        text: $viewModel.password,
+                        highlightColor: .blue,
+                        width: 320
+                    )
+
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Description")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+
+                        TextEditor(text: $viewModel.description)
+                            .frame(height: 100)
+                            .padding(8)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.gray.opacity(0.25))
+                            )
+                    }
+                    .frame(width: 320)
+                }
+                .padding()
+                .background(Color(.systemBackground))
+                .cornerRadius(20)
+                .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+                .padding(.horizontal)
+
+                Button {
+                    viewModel.saveChanges()
+                } label: {
+                    Label("Enregistrer les modifications", systemImage: "checkmark.circle.fill")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(14)
+                        .shadow(radius: 4)
+                }
+                .padding(.horizontal)
+                .padding(.top, 10)
+
+                if viewModel.showSaveConfirmation {
+                    HStack(spacing: 6) {
+                        Image(systemName: "checkmark.seal.fill")
+                        Text("Modifications enregistrées avec succès !")
+                    }
+                    .font(.subheadline)
                     .foregroundColor(.green)
-            }
+                    .transition(.opacity)
+                }
 
-            Spacer()
+                Spacer()
+            }
+            .padding(.bottom, 50)
         }
-        .padding()
+        .background(Color(.systemGroupedBackground))
+        .scrollDismissesKeyboard(.interactively)
+        .navigationTitle("Mon profil")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
+

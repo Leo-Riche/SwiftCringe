@@ -2,14 +2,14 @@ import SwiftUI
 import DesignSystem
 
 struct SwipeView: View {
-     var session: SessionManager
+    var session: SessionManager
     @State private var viewModel: SwipeViewModel
-
+    
     init(session: SessionManager) {
         self.session = session
         _viewModel = State(wrappedValue: SwipeViewModel(session: session))
     }
-   
+    
     var body: some View {
         VStack {
             ZStack {
@@ -72,6 +72,25 @@ struct SwipeView: View {
                                             withAnimation(.spring()) {
                                                 viewModel.topCardOffset = .zero
                                             }
+                                            
+                                        }
+                                    }
+                            )
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { value in
+                                        viewModel.topCardOffset = CGSize(width: value.translation.width, height: 0)
+                                    }
+                                    .onEnded { value in
+                                        let threshold: CGFloat = 120
+                                        if viewModel.topCardOffset.width > threshold {
+                                            viewModel.swipe(.right)
+                                        } else if viewModel.topCardOffset.width < -threshold {
+                                            viewModel.swipe(.left)
+                                        } else {
+                                            withAnimation(.spring()) {
+                                                viewModel.topCardOffset = .zero
+                                            }
                                         }
                                     }
                             )
@@ -80,8 +99,11 @@ struct SwipeView: View {
                     }
                 }
             }
-            .navigationBarBackButtonHidden(true)
-        }
+            .animation(.easeInOut, value: viewModel.profiles)
+            
+            Spacer()
+        }.navigationBarBackButtonHidden(true)
     }
+        
 }
 
