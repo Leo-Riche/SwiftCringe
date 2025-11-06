@@ -95,6 +95,11 @@ struct SwipeView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
+            .navigationBarItems(trailing: NavigationLink(destination: MatchsView(session: session)) {
+                Image(systemName: "heart.fill")
+                    .foregroundColor(.red)
+                    .font(.title2)
+            })
         }
     }
 }
