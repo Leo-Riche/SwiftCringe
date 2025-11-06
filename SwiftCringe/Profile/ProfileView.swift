@@ -1,15 +1,16 @@
 import SwiftUI
 import DesignSystem
 
+
 struct ProfileView: View {
-    @ObservedObject var session: SessionManager
-    @StateObject private var viewModel: ProfileViewModel
+    var session: SessionManager
+    @State private var viewModel: ProfileViewModel
 
     @FocusState private var focusedField: String? // Pour gérer le focus visuel
 
     init(session: SessionManager) {
         self.session = session
-        _viewModel = StateObject(wrappedValue: ProfileViewModel(session: session))
+        _viewModel = State(wrappedValue: ProfileViewModel(session: session))
     }
 
     var body: some View {

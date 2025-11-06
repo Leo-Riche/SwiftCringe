@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-final class SessionManager: ObservableObject {
-    @Published var currentUser: User?
+@Observable
+final class SessionManager {
+    var currentUser: User?
 
     private let userDefaultsKey = "currentUserEmail"
 

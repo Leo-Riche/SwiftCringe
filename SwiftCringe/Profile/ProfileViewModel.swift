@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-final class ProfileViewModel: ObservableObject {
-    @Published var name: String
-    @Published var age: String
-    @Published var description: String
-    @Published var password: String
-    @Published var photoURL: String
-    @Published var showSaveConfirmation = false
+@Observable
+final class ProfileViewModel{
+     var name: String
+     var age: String
+     var description: String
+     var password: String
+     var photoURL: String
+     var showSaveConfirmation = false
 
     private var session: SessionManager
 

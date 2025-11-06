@@ -1,16 +1,17 @@
 import SwiftUI
 import DesignSystem
 
-class SwipeViewModel: ObservableObject {
-    @Published var profiles: [User] = MockData.users
-    @Published var topCardOffset: CGSize = .zero
+@Observable
+class SwipeViewModel {
+    var profiles: [User] = MockData.users
+    var topCardOffset: CGSize = .zero
     
-    @Published var name: String
-    @Published var age: String
-    @Published var description: String
-    @Published var password: String
-    @Published var photoURL: String
-    @Published var showSaveConfirmation = false
+    var name: String
+    var age: String
+    var description: String
+    var password: String
+    var photoURL: String
+    var showSaveConfirmation = false
     
 
     private var session: SessionManager

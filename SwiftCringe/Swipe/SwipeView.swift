@@ -2,12 +2,12 @@ import SwiftUI
 import DesignSystem
 
 struct SwipeView: View {
-    @ObservedObject var session: SessionManager
-    @StateObject private var viewModel: SwipeViewModel
+     var session: SessionManager
+    @State private var viewModel: SwipeViewModel
 
     init(session: SessionManager) {
         self.session = session
-        _viewModel = StateObject(wrappedValue: SwipeViewModel(session: session))
+        _viewModel = State(wrappedValue: SwipeViewModel(session: session))
     }
    
     var body: some View {
@@ -80,11 +80,6 @@ struct SwipeView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(trailing: NavigationLink(destination: MatchsView(session: session)) {
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.red)
-                    .font(.title2)
-            })
         }
     }
 }

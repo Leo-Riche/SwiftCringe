@@ -9,7 +9,7 @@ import SwiftUI
 import DesignSystem
 
 struct MainView: View {
-    @ObservedObject var session: SessionManager
+    var session: SessionManager
     @State private var selectedTab: Tab = .home
 
     enum Tab {

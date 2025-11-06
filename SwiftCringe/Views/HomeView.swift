@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @ObservedObject var session: SessionManager
+    var session: SessionManager
     @Binding var selectedTab: MainView.Tab
 
     var body: some View {
