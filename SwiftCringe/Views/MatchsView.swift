@@ -21,35 +21,44 @@ struct MatchsView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                if likedUsers.isEmpty {
-                    VStack(spacing: 12) {
-                        Image(systemName: "heart.slash")
-                            .font(.system(size: 48))
-                            .foregroundColor(.gray.opacity(0.6))
-                        Text("Aucun like pour le moment 😢")
-                            .font(.title3)
-                            .foregroundColor(.gray)
-                    }
-                    .padding(.top, 100)
-                } else {
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(likedUsers) { user in
-                            MatchCard(
-                                model: .init(
-                                    id: user.id,
-                                    name: user.name,
-                                    description: user.description,
-                                    photoURL: user.photo
-                                )
-                            )
+            ZStack {
+                Color(.systemGroupedBackground)
+                    .ignoresSafeArea()
+                
+                ScrollView {
+                    if likedUsers.isEmpty {
+                        VStack(spacing: 12) {
+                            Image(systemName: "heart.slash")
+                                .font(.system(size: 48))
+                                .foregroundColor(.gray.opacity(0.6))
+                            Text("Aucun like pour le moment 😢")
+                                .font(.title3)
+                                .foregroundColor(.gray)
                         }
+                        .padding(.top, 100)
+                    } else {
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(likedUsers) { user in
+                                MatchCard(
+                                    model: .init(
+                                        id: user.id,
+                                        name: user.name,
+                                        description: user.description,
+                                        photoURL: user.photo
+                                    )
+                                )
+                            }
+                        }
+                        .padding()
                     }
-                    .padding()
                 }
             }
             .navigationTitle("Mes matchs ❤️")
-            .background(Color(.systemGroupedBackground))
         }
+
     }
+}
+
+#Preview {
+    MatchsView(session: .init())
 }
