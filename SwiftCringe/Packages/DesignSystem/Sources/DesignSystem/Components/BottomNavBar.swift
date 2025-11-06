@@ -17,36 +17,38 @@ public struct BottomNavBar<TabType: Hashable>: View {
     }
 
     public var body: some View {
-        HStack {
-            ForEach(tabs) { item in
-                Button {
-                    withAnimation(.easeInOut) {
-                        selectedTab = item.type
-                    }
-                } label: {
-                    VStack(spacing: 4) {
-                        Image(systemName: item.icon)
-                            .font(.system(size: 22, weight: .semibold))
-                            .foregroundColor(selectedTab == item.type ? .blue : .gray)
+        VStack {
+            Spacer()
 
-                        Text(item.label)
-                            .font(.caption)
-                            .foregroundColor(selectedTab == item.type ? .blue : .gray)
-                    }
-                }
+            HStack {
+                ForEach(tabs) { item in
+                    Button {
+                        withAnimation(.easeInOut) {
+                            selectedTab = item.type
+                        }
+                    } label: {
+                        VStack(spacing: 4) {
+                            Image(systemName: item.icon)
+                                .font(.system(size: 22, weight: .semibold))
+                                .foregroundColor(selectedTab == item.type ? .blue : .gray)
 
-                if item != tabs.last {
-                    Spacer()
+                            Text(item.label)
+                                .font(.caption)
+                                .foregroundColor(selectedTab == item.type ? .blue : .gray)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
                 }
             }
+            .padding(.horizontal, 32)
+            .padding(.vertical, 14)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 26))
+            .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 3)
+            .padding(.horizontal, 20)
+            .padding(.bottom, 30)
         }
-        .padding(.horizontal, 32)
-        .padding(.vertical, 12)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
-        .shadow(radius: 5)
-        .padding(.horizontal, 16)
-        .padding(.bottom, 8)
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 
