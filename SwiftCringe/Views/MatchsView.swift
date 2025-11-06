@@ -43,8 +43,8 @@ struct MatchsView: View {
                                     model: .init(
                                         id: user.id,
                                         name: user.name,
-                                        description: user.description,
-                                        photoURL: user.photo
+                                        photo: user.photo,
+                                        description: user.description
                                     )
                                 )
                             }
