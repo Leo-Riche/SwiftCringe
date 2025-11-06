@@ -108,20 +108,13 @@ struct ProfileView: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
                 .padding(.horizontal)
 
-                Button {
+                AnimatedLabelButton(
+                    title: "Enregistrer les modifications",
+                    systemImage: "checkmark.circle.fill",
+                    color: .second
+                ) {
                     viewModel.saveChanges()
-                } label: {
-                    Label("Enregistrer les modifications", systemImage: "checkmark.circle.fill")
-                        .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(14)
-                        .shadow(radius: 4)
                 }
-                .padding(.horizontal)
-                .padding(.top, 10)
 
                 if viewModel.showSaveConfirmation {
                     HStack(spacing: 6) {

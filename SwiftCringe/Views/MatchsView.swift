@@ -30,10 +30,10 @@ struct MatchsView: View {
                         VStack(spacing: 12) {
                             Image(systemName: "heart.slash")
                                 .font(.system(size: 48))
-                                .foregroundColor(.gray.opacity(0.6))
+                                .foregroundColor(.second.opacity(0.6))
                             Text("Aucun like pour le moment 😢")
                                 .font(.title3)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.second)
                         }
                         .padding(.top, 100)
                     } else {

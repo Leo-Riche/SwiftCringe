@@ -30,7 +30,6 @@ public struct MatchCard: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            // --- Photo du profil ---
             AsyncImage(url: URL(string: model.photoURL ?? "")) { image in
                 image
                     .resizable()
@@ -54,7 +53,6 @@ public struct MatchCard: View {
             )
             .cornerRadius(12, corners: [.topLeft, .topRight])
             
-            // --- Texte en dessous ---
             VStack(alignment: .leading, spacing: 4) {
                 Text(model.name)
                     .font(.headline)
@@ -77,7 +75,6 @@ public struct MatchCard: View {
     }
 }
 
-// --- Petite extension utilitaire ---
 fileprivate extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
