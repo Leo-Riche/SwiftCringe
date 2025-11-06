@@ -11,14 +11,14 @@ public struct MatchCard: View {
     public struct Model: Identifiable, Equatable {
         public let id: Int
         public let name: String
+        public let photo: String?
         public let description: String?
-        public let photoURL: String?
         
-        public init(id: Int, name: String, description: String? = nil, photoURL: String? = nil) {
+        public init(id: Int, name: String, photo: String? = nil, description: String? = nil) {
             self.id = id
             self.name = name
+            self.photo = photo
             self.description = description
-            self.photoURL = photoURL
         }
     }
     
@@ -31,7 +31,7 @@ public struct MatchCard: View {
     public var body: some View {
         VStack(spacing: 0) {
             // --- Photo du profil ---
-            AsyncImage(url: URL(string: model.photoURL ?? "")) { image in
+            AsyncImage(url: URL(string: model.photo ?? "")) { image in
                 image
                     .resizable()
                     .scaledToFill()
