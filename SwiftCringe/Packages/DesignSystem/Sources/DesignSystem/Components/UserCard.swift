@@ -14,13 +14,15 @@ public struct UserCard: View {
         public let age: Int
         public let photo: String?
         public let description: String?
+        public var interests: [String]
 
-        public init(id: Int, name: String, age: Int, photo: String? = nil, description: String? = nil) {
+        public init(id: Int, name: String, age: Int, photo: String? = nil, description: String? = nil, interests: [String] = []) {
             self.id = id
             self.name = name
             self.age = age
             self.photo = photo
             self.description = description
+            self.interests = interests
         }
     }
 
@@ -31,60 +33,93 @@ public struct UserCard: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if let photo = user.photo, let url = URL(string: photo) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(maxWidth: .infinity, minHeight: 150)
-                    case .success(let image):
+        GeometryReader { geometry in
+            ZStack(alignment: .top) {
+                // --- Background Image (en haut de l’écran) ---
+                if let photo = user.photo, let url = URL(string: photo) {
+                    AsyncImage(url: url) { image in
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(maxWidth: .infinity, minHeight: 150)
+                            .frame(width: geometry.size.width, height: 500)
                             .clipped()
-                    case .failure(_):
-                        Image(systemName: "person.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 80, height: 80)
-                            .foregroundColor(.gray)
-                            .padding(.top, 10)
-                    @unknown default:
-                        EmptyView()
+                            .overlay(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.clear, .black.opacity(0.5)]),
+                                    startPoint: .center,
+                                    endPoint: .bottom
+                                )
+                            )
+                    } placeholder: {
+                        Color.gray.opacity(0.3)
+                            .frame(height: 500)
+                    }
+                } else {
+                    Color.black.opacity(0.05)
+                        .frame(height: 500)
+                }
+
+                // --- Scrollable Content ---
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 20) {
+                        // Espace pour laisser l'image visible
+                        Spacer().frame(height: 400)
+
+                        // Bloc principal
+                        VStack(alignment: .leading, spacing: 24) {
+                            // Nom + Âge
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Text(user.name)
+                                        .font(.largeTitle.bold())
+                                    Text("· \(user.age)")
+                                        .font(.title2)
+                                }
+                                .foregroundColor(.primary)
+                            }
+
+                            Divider()
+
+                            // Description
+                            if let desc = user.description {
+                                Text(desc)
+                                    .font(.body)
+                                    .foregroundColor(.secondary)
+                                    .lineSpacing(5)
+                            }
+
+                            // Exemple de champs additionnels (facultatif)
+                            if !user.interests.isEmpty {
+                                VStack(alignment: .leading, spacing: 6) {
+                                    Text("Centres d’intérêt")
+                                        .font(.headline)
+                                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], spacing: 8) {
+                                        ForEach(user.interests, id: \.self) { interest in
+                                            Text(interest)
+                                                .font(.caption)
+                                                .padding(.horizontal, 10)
+                                                .padding(.vertical, 6)
+                                                .background(Color.blue.opacity(0.15))
+                                                .clipShape(Capsule())
+                                        }
+                                    }
+                                }
+                            }
+
+                            Spacer(minLength: 60)
+                        }
+                        .padding(24)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 32)
+                                .fill(Color(.systemBackground))
+                                .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: -2)
+                        )
                     }
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 12))
-            } else {
-                Image(systemName: "person.crop.square.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 80, height: 80)
-                    .foregroundColor(.gray)
-                    .padding(.top, 10)
             }
-
-            Text(user.name)
-                .font(.headline)
-            Text("Âge : \(user.age)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-
-            if let desc = user.description {
-                Text(desc)
-                    .font(.body)
-                    .foregroundColor(.gray)
-                    .padding(.top, 4)
-            }
-
-            Spacer(minLength: 0)
+            .ignoresSafeArea(edges: .top)
         }
-        .padding()
-        .frame(maxWidth: 250, alignment: .leading)
-        .background(Color.white)
-        .cornerRadius(12)
-        .shadow(color: .gray.opacity(0.2), radius: 4, x: 0, y: 2)
     }
 }
 
@@ -94,7 +129,12 @@ public struct UserCard: View {
         name: "Alice Dupont",
         age: 25,
         photo: "https://randomuser.me/api/portraits/women/1.jpg",
-        description: "Passionnée de design et de voyages, Alice adore découvrir de nouvelles cultures."
+        description: """
+        Passionnée de design et de voyages, Alice adore découvrir de nouvelles cultures et partager ses aventures.
+        Elle aime aussi la photo, le café entre amis et les randonnées le week-end.
+
+        Toujours curieuse et pleine d’énergie, elle cherche à rencontrer des gens qui partagent sa passion pour la créativité et la découverte du monde.
+        """,
+        interests: ["design", "voyages", "photo", "café", "randonnée"]
     ))
 }
-

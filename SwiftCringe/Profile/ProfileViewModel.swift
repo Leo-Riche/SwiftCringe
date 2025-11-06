@@ -46,7 +46,8 @@ final class ProfileViewModel{
             photo: photoURL.isEmpty ? nil : photoURL,
             description: description.isEmpty ? nil :
             description,
-            listLikes: current.listLikes
+            listLikes: current.listLikes,
+            interests: current.interests
         )
         
         session.currentUser = updatedUser

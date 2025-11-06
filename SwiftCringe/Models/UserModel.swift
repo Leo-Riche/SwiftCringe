@@ -16,4 +16,5 @@ struct User: Identifiable, Codable, Equatable {
     let photo: String?
     let description: String?
     var listLikes: [Int]
+    var interests: [String]
 }

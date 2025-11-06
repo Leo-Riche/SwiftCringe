@@ -28,7 +28,8 @@ struct SwipeView: View {
                                 name: profile.name,
                                 age: profile.age,
                                 photo: profile.photo,
-                                description: profile.description
+                                description: profile.description,
+                                interests: profile.interests
                             ))
                             .offset(x: viewModel.topCardOffset.width, y: 0)
                             .rotationEffect(.degrees(Double(viewModel.topCardOffset.width / 15)))
