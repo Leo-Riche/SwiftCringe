@@ -54,7 +54,7 @@ struct LoginView: View {
                         .font(.caption)
                 }
 
-                NavigationLink(destination: HomeView(session: session), isActive: .constant(session.isLoggedIn)) {
+                NavigationLink(destination: MainView(session: session), isActive: .constant(session.isLoggedIn)) {
                     EmptyView()
                 }
 

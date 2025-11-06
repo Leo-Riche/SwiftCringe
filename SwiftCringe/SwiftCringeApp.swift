@@ -8,10 +8,17 @@
 import SwiftUI
 
 @main
-struct SwiftCringeApp: App {
+struct YourAppNameApp: App {
+    @StateObject private var session = SessionManager()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if session.isLoggedIn {
+                MainView(session: session)
+            } else {
+                LoginView()
+            }
         }
     }
 }
+
