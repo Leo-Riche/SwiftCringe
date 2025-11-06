@@ -44,7 +44,6 @@ class SwipeViewModel: ObservableObject {
         }
     }
     
-    // Fonction de gestion du swipe
     func swipe(_ direction: SwipeDirection) {
         withAnimation(.easeOut(duration: 0.3)) {
             switch direction {
@@ -57,18 +56,14 @@ class SwipeViewModel: ObservableObject {
             }
         }
 
-        // Suppression du profil après l'animation
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 withAnimation {
                     if !self.profiles.isEmpty {
                         let profile = self.profiles.last!
 
-                        // ✅ Ajout du like si swipe à droite
                         if direction == .right {
                             self.addLike(profileId: profile.id)
-                            print("❤️ Ajouté à la liste des likes : \(profile.name)")
                         } else {
-                            print("👎 NON pour \(profile.name)")
                         }
 
                         self.profiles.removeLast()
@@ -78,12 +73,11 @@ class SwipeViewModel: ObservableObject {
             }
     }
     
-    // Nouvelle fonction pour ajouter à listLikes
     private func addLike(profileId: Int) {
         guard var currentUser = session.currentUser else { return }
         if !currentUser.listLikes.contains(profileId) {
             currentUser.listLikes.append(profileId)
-            session.currentUser = currentUser // on met à jour le user dans la session
+            session.currentUser = currentUser
         }
     }
     
