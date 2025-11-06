@@ -7,48 +7,32 @@
 
 import SwiftUI
 
-public struct BottomNavBar<TabType: Hashable>: View {
+public struct BottomNavBar<TabType: Hashable, Content: View>: View {
     @Binding var selectedTab: TabType
     let tabs: [TabItem<TabType>]
+    let content: (TabType) -> Content
 
-    public init(selectedTab: Binding<TabType>, tabs: [TabItem<TabType>]) {
+    public init(
+        selectedTab: Binding<TabType>,
+        tabs: [TabItem<TabType>],
+        @ViewBuilder content: @escaping (TabType) -> Content
+    ) {
         self._selectedTab = selectedTab
         self.tabs = tabs
+        self.content = content
     }
 
     public var body: some View {
-        VStack {
-            Spacer()
-
-            HStack {
-                ForEach(tabs) { item in
-                    Button {
-                        withAnimation(.easeInOut) {
-                            selectedTab = item.type
-                        }
-                    } label: {
-                        VStack(spacing: 4) {
-                            Image(systemName: item.icon)
-                                .font(.system(size: 22, weight: .semibold))
-                                .foregroundColor(selectedTab == item.type ? .blue : .gray)
-
-                            Text(item.label)
-                                .font(.caption)
-                                .foregroundColor(selectedTab == item.type ? .blue : .gray)
-                        }
-                        .frame(maxWidth: .infinity)
+        TabView(selection: $selectedTab) {
+            ForEach(tabs) { item in
+                content(item.type)
+                    .tabItem {
+                        Label(item.label, systemImage: item.icon)
                     }
-                }
+                    .tag(item.type)
             }
-            .padding(.horizontal, 32)
-            .padding(.vertical, 14)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 26))
-            .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 3)
-            .padding(.horizontal, 20)
-            .padding(.bottom, 30)
         }
-        .ignoresSafeArea(edges: .bottom)
+        .tint(.blue)
     }
 }
 
@@ -68,4 +52,3 @@ public struct TabItem<TabType: Hashable>: Identifiable, Equatable {
         lhs.id == rhs.id
     }
 }
-
