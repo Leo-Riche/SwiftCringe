@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var session: SessionManager
+    @Binding var selectedTab: MainView.Tab
 
     var body: some View {
         VStack(spacing: 20) {
@@ -39,14 +40,19 @@ struct HomeView: View {
                     .bold()
             }
 
-            NavigationLink(destination: ProfileView(session: session)) {
+            Button {
+                selectedTab = .profile
+            } label: {
                 Label("Voir mon profil", systemImage: "person.crop.circle")
                     .font(.headline)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
             }
             .buttonStyle(.borderedProminent)
-            NavigationLink(destination: SwipeView(session: session)) {
+
+            Button {
+                selectedTab = .swipe
+            } label: {
                 Label("Swiper !", systemImage: "heart.fill")
                     .font(.headline)
                     .padding(.horizontal, 16)
